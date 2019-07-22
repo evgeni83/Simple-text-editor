@@ -1,0 +1,8 @@
+.editor, .form-control {
+  min-height: 70vh;
+  border-width: 5px !important;
+}
+
+.editor:focus {
+  outline: none;
+}
