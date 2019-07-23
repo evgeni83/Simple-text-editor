@@ -16,7 +16,7 @@ var editorVersion = 'editorContent' + saveVersionNumber;
 var SavingValue = function () {
   this.key = editorVersion;
   this.value = editorElem.innerHTML;
-  this.date = new Date();
+  this.date = new Date().toLocaleString();
 };
 
 savingValue = new SavingValue();
