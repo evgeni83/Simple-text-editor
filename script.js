@@ -1,21 +1,21 @@
 'use strict';
 
-var container = document.querySelector('.container');
-var editor = document.querySelector('.editor');
-var editBtn = document.querySelector('.edit-btn');
-var saveBtn = document.querySelector('.save-btn');
-var cnclBtn = document.querySelector('.cncl-btn');
-var clrBtn = document.querySelector('.clr-btn');
-var loadBtn = document.querySelector('.load-btn');
-var select = document.querySelector('.form-control');
-var options = document.getElementsByTagName('option');
+var containerElem = document.querySelector('.container');
+var editorElem = document.querySelector('.editor');
+var editBtnElem = document.querySelector('.edit-btn');
+var saveBtnElem = document.querySelector('.save-btn');
+var cnclBtnElem = document.querySelector('.cncl-btn');
+var clrBtnElem = document.querySelector('.clr-btn');
+var loadBtnElem = document.querySelector('.load-btn');
+var selectElem = document.querySelector('.form-control');
+var optionElems = document.getElementsByTagName('option');
 var saveVersionNumber = 0;
 var savingValue;
 var editorVersion = 'editorContent' + saveVersionNumber;
 
 var SavingValue = function () {
   this.key = editorVersion;
-  this.value = editor.innerHTML;
+  this.value = editorElem.innerHTML;
   this.date = new Date();
 };
 
@@ -32,65 +32,65 @@ if (!localStorage.hasOwnProperty(editorVersion)) {
       createNewOption()
     };
   };
-  editor.innerHTML = JSON.parse(localStorage.getItem(editorVersion)).value;
+  editorElem.innerHTML = JSON.parse(localStorage.getItem(editorVersion)).value;
 };
 
-container.addEventListener('click', function (event) {
-  if (event.target === editBtn) {
-    editor.setAttribute('contenteditable', 'true');
-    editor.classList.remove('border-primary');
-    editor.classList.add('border-success');
-    editBtn.setAttribute('disabled', 'true');
-    saveBtn.classList.remove('invisible');
-    cnclBtn.classList.remove('invisible');
+containerElem.addEventListener('click', function (event) {
+  if (event.target === editBtnElem) {
+    editorElem.setAttribute('contenteditable', 'true');
+    editorElem.classList.remove('border-primary');
+    editorElem.classList.add('border-success');
+    editBtnElem.setAttribute('disabled', 'true');
+    saveBtnElem.classList.remove('invisible');
+    cnclBtnElem.classList.remove('invisible');
   };
 
-  if (event.target === saveBtn) {
-    editor.innerHTML = editor.innerHTML;
+  if (event.target === saveBtnElem) {
+    editorElem.innerHTML = editorElem.innerHTML;
     saveVersionNumber++;
     editorVersion = 'editorContent' + saveVersionNumber;
     savingValue = new SavingValue();
     localStorage.setItem(editorVersion, JSON.stringify(savingValue))
     createNewOption();
-    editor.setAttribute('contenteditable', 'false');
-    editor.classList.remove('border-success');
-    editor.classList.add('border-primary');
-    saveBtn.classList.add('invisible');
-    cnclBtn.classList.add('invisible');
-    editBtn.removeAttribute('disabled');
+    editorElem.setAttribute('contenteditable', 'false');
+    editorElem.classList.remove('border-success');
+    editorElem.classList.add('border-primary');
+    saveBtnElem.classList.add('invisible');
+    cnclBtnElem.classList.add('invisible');
+    editBtnElem.removeAttribute('disabled');
   };
 
-  if (event.target === cnclBtn) {
-    editor.innerHTML = JSON.parse(localStorage.getItem(editorVersion)).value;
-    editor.setAttribute('contenteditable', 'false');
-    editor.classList.remove('border-success');
-    editor.classList.add('border-primary');
-    saveBtn.classList.add('invisible');
-    cnclBtn.classList.add('invisible');
-    editBtn.removeAttribute('disabled');
+  if (event.target === cnclBtnElem) {
+    editorElem.innerHTML = JSON.parse(localStorage.getItem(editorVersion)).value;
+    editorElem.setAttribute('contenteditable', 'false');
+    editorElem.classList.remove('border-success');
+    editorElem.classList.add('border-primary');
+    saveBtnElem.classList.add('invisible');
+    cnclBtnElem.classList.add('invisible');
+    editBtnElem.removeAttribute('disabled');
   };
-  if (event.target === clrBtn) {
+  if (event.target === clrBtnElem) {
     localStorage.clear();
     location.reload();
   };
 });
 
-container.addEventListener('submit', function (event) {
+containerElem.addEventListener('submit', function (event) {
   event.preventDefault();
-  editor.innerHTML = JSON.parse(localStorage.getItem(String(select.value))).value;
-  editor.setAttribute('contenteditable', 'false');
-  editor.classList.remove('border-success');
-  editor.classList.add('border-primary');
-  saveBtn.classList.add('invisible');
-  cnclBtn.classList.add('invisible');
-  editBtn.removeAttribute('disabled');
+  editorElem.innerHTML = JSON.parse(localStorage.getItem(String(selectElem.value))).value;
+  editorElem.setAttribute('contenteditable', 'false');
+  editorElem.classList.remove('border-success');
+  editorElem.classList.add('border-primary');
+  saveBtnElem.classList.add('invisible');
+  cnclBtnElem.classList.add('invisible');
+  editBtnElem.removeAttribute('disabled');
 });
 
 function createNewOption() {
   var date = JSON.parse(localStorage.getItem(editorVersion)).date;
   var option = new Option(('Save ver.' + saveVersionNumber + ' ' + date), editorVersion, false, false);
-  select.appendChild(option);
-  options = document.getElementsByTagName('option')
+  selectElem.appendChild(option);
+  optionElems = document.getElementsByTagName('option')
 };
 
 // Для про:
