@@ -56,9 +56,10 @@ containerElem.addEventListener('click', function (event) {
   };
 
   if (event.target === cnclBtnElem) {
-    editorElem.innerHTML = JSON.parse(localStorage.getItem(String(selectElem.value))).value;
+    editorElem.innerHTML = JSON.parse(localStorage.getItem(document.querySelector(".current").classList[0])).value;
     disableEditing();
   };
+
   if (event.target === clrBtnElem) {
     localStorage.clear();
     location.reload();
@@ -69,6 +70,11 @@ containerElem.addEventListener('submit', function (event) {
   event.preventDefault();
   editorElem.innerHTML = JSON.parse(localStorage.getItem(String(selectElem.value))).value;
   disableEditing();
+  for (var i = 0; i < optionElems.length; i++) {
+    optionElems[i].classList.remove('current');
+  };
+  optionElems[selectElem.value.substr(-1) - 1].classList.add('current');
+
 });
 
 function disableEditing() {
@@ -83,6 +89,11 @@ function disableEditing() {
 function createNewOption() {
   var date = JSON.parse(localStorage.getItem(editorVersion)).date;
   var option = new Option(('Save ver.' + saveVersionNumber + ' ' + date), editorVersion, false, false);
+  option.classList.add(editorVersion);
+  for (var i = 0; i < optionElems.length; i++) {
+    optionElems[i].classList.remove('current');
+  };
+  option.classList.add('current');
   if (editorVersion == 'editorContent0') {
     return false;
   } else {

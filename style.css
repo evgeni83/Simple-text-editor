@@ -6,3 +6,7 @@
 .editor:focus {
   outline: none;
 }
+
+.current {
+  font-weight: 900;
+}
