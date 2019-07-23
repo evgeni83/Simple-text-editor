@@ -52,22 +52,12 @@ containerElem.addEventListener('click', function (event) {
     savingValue = new SavingValue();
     localStorage.setItem(editorVersion, JSON.stringify(savingValue))
     createNewOption();
-    editorElem.setAttribute('contenteditable', 'false');
-    editorElem.classList.remove('border-success');
-    editorElem.classList.add('border-primary');
-    saveBtnElem.classList.add('invisible');
-    cnclBtnElem.classList.add('invisible');
-    editBtnElem.removeAttribute('disabled');
+    disableEditing();
   };
 
   if (event.target === cnclBtnElem) {
-    editorElem.innerHTML = JSON.parse(localStorage.getItem(editorVersion)).value;
-    editorElem.setAttribute('contenteditable', 'false');
-    editorElem.classList.remove('border-success');
-    editorElem.classList.add('border-primary');
-    saveBtnElem.classList.add('invisible');
-    cnclBtnElem.classList.add('invisible');
-    editBtnElem.removeAttribute('disabled');
+    editorElem.innerHTML = JSON.parse(localStorage.getItem(String(selectElem.value))).value;
+    disableEditing();
   };
   if (event.target === clrBtnElem) {
     localStorage.clear();
@@ -78,13 +68,17 @@ containerElem.addEventListener('click', function (event) {
 containerElem.addEventListener('submit', function (event) {
   event.preventDefault();
   editorElem.innerHTML = JSON.parse(localStorage.getItem(String(selectElem.value))).value;
+  disableEditing();
+});
+
+function disableEditing() {
   editorElem.setAttribute('contenteditable', 'false');
   editorElem.classList.remove('border-success');
   editorElem.classList.add('border-primary');
   saveBtnElem.classList.add('invisible');
   cnclBtnElem.classList.add('invisible');
   editBtnElem.removeAttribute('disabled');
-});
+};
 
 function createNewOption() {
   var date = JSON.parse(localStorage.getItem(editorVersion)).date;
@@ -93,7 +87,7 @@ function createNewOption() {
     return false;
   } else {
     selectElem.appendChild(option);
-    optionElems = document.getElementsByTagName('option')
+    optionElems = document.getElementsByTagName('option');
   };
 };
 
