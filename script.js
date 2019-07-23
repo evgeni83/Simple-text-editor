@@ -29,7 +29,7 @@ if (!localStorage.hasOwnProperty(editorVersion)) {
     if (localStorage.key(i).indexOf('editorContent') >= 0) {
       saveVersionNumber++;
       editorVersion = 'editorContent' + saveVersionNumber;
-      createNewOption()
+      createNewOption();
     };
   };
   editorElem.innerHTML = JSON.parse(localStorage.getItem(editorVersion)).value;
@@ -89,8 +89,12 @@ containerElem.addEventListener('submit', function (event) {
 function createNewOption() {
   var date = JSON.parse(localStorage.getItem(editorVersion)).date;
   var option = new Option(('Save ver.' + saveVersionNumber + ' ' + date), editorVersion, false, false);
-  selectElem.appendChild(option);
-  optionElems = document.getElementsByTagName('option')
+  if (editorVersion == 'editorContent0') {
+    return false;
+  } else {
+    selectElem.appendChild(option);
+    optionElems = document.getElementsByTagName('option')
+  };
 };
 
 // Для про:
